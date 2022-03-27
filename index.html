@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIKE-ex</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/prefixfree.min.js"></script>
+
+    <style>
+        @font-face {
+            font-family: jeju01;
+            src: url("font/JejuGothic.ttf");
+        }
+
+        @font-face {
+            font-family: jeju02;
+            src: url("font/JejuHallasan.ttf");
+        }
+
+        @font-face {
+            font-family: jeju03;
+            src: url("font/JejuMyeongjo.ttf");
+        }
+
+        @import url(http://fonts.googleapis.com/css?family=Play);
+        @import url(http://fonts.googleapis.com/css?family=Monoton);
+
+        /*    Reset CSS  */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        a {
+            outline: 0;
+            text-decoration: none;
+            color: #bbb;
+        }
+
+        img {
+            border: 0;
+        }
+
+        body {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #111;
+        }
+
+        /* 배경동영상 */
+        .vid {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: -60px;
+            left: 0px;
+            opacity: 0.9;
+        }
+
+        .vid video {
+            width: 100%;
+            min-width: 1600px;
+            /* 최소 1600 */
+        }
+
+        /*로고*/
+        h1 {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 10;
+            /* 제일 위에 창 올림 */
+        }
+
+        h1 img {
+            width: 150px;
+            height: 150px;
+        }
+
+        header {
+            width: 700px;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: -420px;
+            /* gradient 점진적 색 변화 */
+            background: linear-gradient(-45deg, #069be0, #036e72, #053653);
+            /* X축으로 기울임 */
+            transform: skewX(-40deg);
+        }
+
+        /* gnb */
+        #gnb {
+            width: 220px;
+            /* 부모(header) 기준으로 위치 */
+            position: absolute;
+            top: 150px;
+            right: 0;
+        }
+
+        #gnb>li {
+            position: relative;
+        }
+
+        #gnb>li>a {
+            display: block;
+            width: 220px;
+            height: 50px;
+            font: bold 18px/3 play;
+            /* shorthand 작성 법 /3: lineheight */
+            color: #222;
+            box-sizing: border-box;
+            padding-right: 40px;
+            text-align: right;
+        }
+
+        #gnb>li.on>a {
+            background-color: black;
+            color: white;
+        }
+
+        #gnb>li:hover {
+            background-color: gray;
+            color: black;
+        }
+
+        #gnb em {
+            transform: skewX(40deg) !important;
+            /* 부모의 영향으로 인한 기울어진 글자를 똑바로 */
+            display: inline-block;
+            /* 인라인블럭하지 않으면 skew가 적용 안됨. */
+        }
+
+        #gnb em i {
+            margin-right: 10px;
+        }
+
+        /* 2 depth */
+        #gnb ul {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            transition: 1s;
+            /* start frame time 설정 */
+        }
+
+        #gnb li:hover ul {
+            opacity: 1;
+            left: 205px;
+        }
+
+        #gnb ul a {
+            display: block;
+            width: 150px;
+            height: 40px;
+            background: #222;
+            border-bottom: 1px solid #b9fb05;
+            font: bold 16px/2.5 arial;
+            color: #fff;
+            box-sizing: border-box;
+            padding-left: 50px;
+            margin-bottom: 3px;
+            /* all is default */
+            transition: all 1s;
+        }
+
+        #gnb ul a:hover {
+            background-color: #b9fb05;
+            color: black;
+        }
+
+        /* gnb */
+
+        /* sns */
+        #sns {
+            position: fixed;
+            top: 50px;
+            right: 50px;
+        }
+
+        #sns li {
+            float: left;
+            padding-right: 20px;
+        }
+
+        #sns li i {
+            color: #97e031;
+            font-size: 30px;
+            opacity: 0.5;
+            transform: scale(1);
+            transition: 1s;
+        }
+
+        #sns li i:hover {
+            opacity: 1;
+            transform: scale(1.4);
+        }
+
+        /* sns */
+
+        /* 텍스트 박스 */
+        .txtBox {
+            width: 340px;
+            height: 150px;
+            position: fixed;
+            top: 150px;
+            right: 100px;
+        }
+
+        .txt {
+            position: absolute;
+            top: 250px;
+            right: 100px;
+            font-size: 34px;
+            font-family: jeju01;
+            color: darkblue;
+            letter-spacing: -2px;
+        }
+
+        .txt>b {
+            font: bold 27px arial;
+            color: darkblue;
+            margin-left: 20px;
+        }
+
+        .tit {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            font-size: 80px;
+            color: darkblue;
+            font-family: 'Monoton', jeju03;
+            letter-spacing: -1px;
+        }
+
+        .tit em {
+            font-size: 80px;
+            font-family: jeju03;
+            color: darkblue;
+        }
+
+        /* 텍스트 박스 */
+        /* contents 레이아웃 */
+        #side {
+            width: 800px;
+            height: 100%;
+            position: fixed;
+            bottom: 0px;
+            right: -800px;
+            background: #111;
+            opacity: 0.5;
+            transform: skewX(-40deg);
+            transition: all 0.5s;
+        }
+
+        #side:hover {
+            right: -500px;
+            opacity: 0.8;
+        }
+
+        #side .con {
+            width: 400px;
+            height: 100%;
+            position: absolute;
+            left: 150px;
+            bottom: 0px;
+            background: #000;
+            box-sizing: border-box;
+            padding: 10px;
+            transition: all 1s;
+        }
+
+        #side:hover .con {
+            left: 50px;
+        }
+
+        /* contents 레이아웃 */
+        /* contents내 썸네일 */
+        #side .con p {
+            width: 300px;
+            height: 100px;
+            position: absolute;
+            left: 50px;
+        }
+
+        #side .con p em {
+            display: inline-block;
+            font: bold 16px/1.7 arial;
+            color: #a0bd50;
+            transform: skewX(40deg);
+        }
+
+        #side .con p img {
+            width: 300px;
+            height: 70px;
+            opacity: 0.3;
+            transition: all 0.5s;
+        }
+
+        #side .con p img:hover {
+            opacity: 1;
+        }
+
+        #side .con p:nth-child(1) {
+            bottom: 270px;
+            transform: translateX(200px);
+            /* 가로 방향으로 200px 떨어져있게 */
+            transition: 0.5s;
+        }
+
+        #side .con p:nth-child(2) {
+            bottom: 160px;
+            transform: translateX(200px);
+            transition: all 1.0s;
+        }
+
+        #side .con p:nth-child(3) {
+            bottom: 50px;
+            transform: translateX(200px);
+            transition: all 1.5s;
+        }
+
+        #side:hover .con p {
+            transform: translateX(0px);
+            /* 왼쪽에 붙게하는 코드G */
+        }
+
+        /* contents 내 썸네일 */
+
+        /* 자동롤링 버튼*/
+        #side .btnContents {
+            width: 150px;
+            height: 50px;
+            position: absolute;
+            bottom: 40px;
+            left: 100px;
+            color: #b9fb05;
+            transform: skewX(40deg);
+        }
+
+        #side:hover .btnContents {
+            left: 700px;
+        }
+
+        .btnContents i {
+            font-size: 70px;
+            position: absolute;
+            bottom: 40px;
+            right: 0px;
+            opacity: 1;
+        }
+
+        .btnContents i:nth-child(1) {
+            animation: ani linear 1.5s 0s infinite;
+            /* 이름, 동작옵션, 동작시간, 딜레이, 반복옵션 */
+        }
+
+        .btnContents i:nth-child(2) {
+            animation: ani linear 1.5s 0.5s infinite;
+        }
+
+        .btnContents i:nth-child(3) {
+            animation: ani linear 1.5s 1.0s infinite;
+        }
+
+        @keyframes ani {
+            0% {
+                right: 0;
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                right: 100px;
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- 동영상 ------------------------------------------------->
+    <figure class="vid">
+        <video loop autoplay muted="muted">
+            <source src="img/video001.mp4" type="video/mp4" /> <!-- 시작 과 끝 / 로 -->
+        </video>
+    </figure>
+    <!-- 동영상 -->
+
+    <!-- 로고 ---------------------------------------------------->
+    <h1><img src="img/logo001.png" /></h1>
+    <!-- 로고 -->
+    <!-- header ---------------------------------------------------->
+    <header>
+        <ul id="gnb">
+            <!-- gnb : global navigation bar -->
+            <li class="on">
+                <!-- on -> active -->
+                <ul>
+                    <li><a href="#"><em><b>English</b></em></a></li>
+                    <li><a href="#"><em><b>Korean</b></em></a></li>
+                </ul>
+                <a href="#"><em><i class="fa fa-refresh fa-spin"></i>About Sa&Li.Fe</em></a>
+            </li> <!-- spin -> fa가 스핀 -->
+            <li>
+                <a href="#"><em>Sa&Li.Fe Info</em></a>
+                <ul>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><em> Community</em></a> <!-- em 감조 -->
+                <ul>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><em>Product Value</em></a>
+                <ul>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><em>Company History</em></a>
+                <ul>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                    <li><a href="#"><em>sub</em></a></li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+    <!-- header -->
+    <!-- sns 버튼모음 --------------------------------------------->
+    <ul id="sns">
+        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+        <!-- 사라졋음 -->
+        <!-- <li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
+        <!-- <li><a href="#"><i class="fa fa-android"></i></a></li> -->
+        <!-- sns 버튼 모음 -->
+    </ul>
+    <!-- 웹폰트 텍스트박스 ------------------------------------->
+    <section class="txtBox">
+        <p class="txt">For Every Child<br><b>a fair chance</b></p>
+        <p class="tit">SAFE<em>& LIFE</em></p>
+    </section>
+    <!-- 웹폰트 텍트스박스 -->
+
+    <!-- 하단 컨텐츠박스 ------------------------------------------>
+    <section id="side">
+        <div class="con">
+            <p>
+                <em>Official Website</em>
+                <a href="#"><img src="img/unicef001.jpg" /></a>
+            </p>
+            <p>
+                <em>Sponsorship</em>
+                <a href="#"><img src="img/unicef002.jpg" /></a>
+            </p>
+            <p>
+                <em>Message of Supporting</em>
+                <a href="#"><img src="img/unicef003.jpg" /></a>
+            </p>
+        </div>
+    </section>
+    <!-- 하단 컨텐츠박스 -->
+
+    <!-- 자동롤링 버튼 ------------------------------------>
+    <div class="btnContents">
+        <i class="fa fa-angle-double-left"></i>
+        <i class="fa fa-angle-double-left"></i>
+        <i class="fa fa-angle-double-left"></i>
+    </div>
+    <!-- 자동롤링 버튼 -->
+</body>
+
+</html>
